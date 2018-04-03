@@ -4,49 +4,47 @@
 
 section .text
 	global _ft_puts
+	extern _ft_strlen
 
 _ft_puts:
+	push rbp
+	mov rbp, rsp
+	sub rsp, 16
 	cmp rdi, 0
 	jz display_null
-	mov rdx, 0
-	mov rsi, rdi
-	jmp ft_strlen
+	push rdi
+	call _ft_strlen
+	mov rdx, rax
+	jmp display
 
 display_null:
-	mov rsi, [rel null_msg.string]
+	lea rsi, [rel null_msg.string]
 	mov rdx, null_msg.len
 	mov rdi, STDOUT
 	mov rax, MACH_SYSCALL(WRITE)
 	syscall
-	mov rax, 10
 	jmp end
 
-ft_strlen:
-	cmp byte [rsi], 0
-	jz display
-	inc rdx
-	inc rsi
-	jmp ft_strlen
-
 display:
-	mov rsi, rdi
+	pop rsi
 	mov rdi, STDOUT
 	mov rax, MACH_SYSCALL(WRITE)
 	syscall
-	mov rsi, [rel null_msg.string]
-	mov rdx, null_msg.len
+	lea rsi, [rel new_line.string]
+	mov rdx, new_line.len
 	mov rdi, STDOUT
 	mov rax, MACH_SYSCALL(WRITE)
 	syscall
-	mov rax, 20
 
 end:
+	mov rsp, rbp
+	pop rbp
 	ret
 
 section .data
 null_msg:
-	.string db '(null)', 0xa
+	.string db '(null)', 0xA
 	.len equ $ - null_msg
 new_line:
-	.string db 0xa, 0xd
+	.string db 0x0a
 	.len equ $ - new_line

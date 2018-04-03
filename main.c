@@ -71,6 +71,47 @@ void	ft_tolower_test(int c)
 	printf("ft_tolower = %c\n", ret);
 }
 
+void	ft_strlen_test(char *str)
+{
+	printf("ft_strlen = %s %zu\n", str, ft_strlen(str));
+}
+
+void	ft_memset_test()
+{
+	char test[7] = {41, 42, 43, 44, 45, 46, 47};
+	int i;
+	char *ret;
+
+	i = -1;
+	ret = ft_memset(test, 'a', 7);
+	while (++i < 7)
+		printf("ft_memset = %c\n", ret[i]);
+}
+
+void	ft_memcpy_test()
+{
+	char *srcs = "Hello World";
+	char dest[30];
+	char *ret;
+	int i;
+
+	ret = ft_memcpy(dest, srcs, 6);
+	i = -1;
+	while (++i < 5)
+		printf("ft_memcpy = %c %c\n", ret[i], dest[i]);
+}
+
+void	ft_strdup_test()
+{
+	char *test;
+	int i;
+
+	test = ft_strdup("HAHAHA");
+	i = -1;
+	while (++i < 7)
+		printf("ft_strdup = %c\n", test[i]);
+}
+
 int	main()
 {
 	ft_bzero_test();
@@ -81,6 +122,11 @@ int	main()
 	ft_isprint_test(127);
 	ft_toupper_test('g' - 1);
 	ft_tolower_test('Z');
-	printf("TEST = %d\n", ft_puts(NULL));
+	printf("TEST = %d\n", ft_puts("Hello"));
+	ft_puts(NULL);
+	ft_strlen_test("Hello World");
+	ft_memset_test();
+	ft_memcpy_test();
+	ft_strdup_test();
 	return (0);
 }
