@@ -19,11 +19,16 @@ void	ft_strcat_test()
 {
 	char	*src = "This is";
 	char	dest[20];
+	char	lib_dest[20];
 	char	*ret;
+	char	*lib_ret;
 
 	dest[0] = 0;
+	lib_dest[0] = 0;
 	ret = ft_strcat(dest, src);
+	lib_ret = ft_strcat(lib_dest, src);
 	printf("ft_strcat = %s %s\n", dest, ret);
+	printf("lib_ft_strcat = %s %s\n", lib_dest, lib_ret);
 }
 
 

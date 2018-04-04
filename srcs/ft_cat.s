@@ -6,7 +6,7 @@
 #    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/04 11:13:51 by gdannay           #+#    #+#              #
-#    Updated: 2018/04/04 11:13:53 by gdannay          ###   ########.fr        #
+#    Updated: 2018/04/04 11:25:53 by gdannay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ _ft_cat:
 
 display:
 	push rdi
-	mov rsi, buff
+	lea rsi, [rel buff]
 	mov rdx, BUFF_SIZE
 	mov rax, MACH_SYSCALL(READ)
 	syscall

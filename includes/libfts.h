@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:01:52 by gdannay           #+#    #+#             */
-/*   Updated: 2018/04/04 11:13:42 by gdannay          ###   ########.fr       */
+/*   Updated: 2018/04/04 11:19:07 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ size_t	ft_strlen(const char *str);
 void	*ft_memset(void *str, int c, size_t n);
 void	*ft_memcpy(void *str1, const void *str2, size_t n);
 char	*ft_strdup(const char *s);
-void	ft_cat(in fd);
+void	ft_cat(int fd);
 
 #endif
