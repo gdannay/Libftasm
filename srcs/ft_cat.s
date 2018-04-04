@@ -1,49 +1,40 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    ft_puts.s                                          :+:      :+:    :+:    #
+#    ft_cat.s                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/04/04 11:16:25 by gdannay           #+#    #+#              #
-#    Updated: 2018/04/04 11:16:26 by gdannay          ###   ########.fr        #
+#    Created: 2018/04/04 11:13:51 by gdannay           #+#    #+#              #
+#    Updated: 2018/04/04 11:13:53 by gdannay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 %define MACH_SYSCALL(nb)	0x2000000 | nb
-%define WRITE				4
 %define STDOUT				1
+%define READ				3
+%define WRITE				4
+%define BUFF_SIZE			2048
 
 section .text
-	global _ft_puts
-	extern _ft_strlen
+	global _ft_cat
 
-_ft_puts:
+_ft_cat:
 	push rbp
 	mov rbp, rsp
 	sub rsp, 16
 	cmp rdi, 0
-	jz display_null
-	push rdi
-	call _ft_strlen
-	mov rdx, rax
-	jmp display
-
-display_null:
-	lea rsi, [rel null_msg.string]
-	mov rdx, null_msg.len
-	mov rdi, STDOUT
-	mov rax, MACH_SYSCALL(WRITE)
-	syscall
-	jmp end
+	jl end
 
 display:
-	pop rsi
-	mov rdi, STDOUT
-	mov rax, MACH_SYSCALL(WRITE)
+	push rdi
+	mov rsi, buff
+	mov rdx, BUFF_SIZE
+	mov rax, MACH_SYSCALL(READ)
 	syscall
-	lea rsi, [rel new_line.string]
-	mov rdx, new_line.len
+	cmp rax, 1
+	jl end
+	mov rdx, rax
 	mov rdi, STDOUT
 	mov rax, MACH_SYSCALL(WRITE)
 	syscall
@@ -53,10 +44,5 @@ end:
 	pop rbp
 	ret
 
-section .data
-null_msg:
-	.string db '(null)', 0xA
-	.len equ $ - null_msg
-new_line:
-	.string db 0x0a
-	.len equ $ - new_line
+section .bss
+	buff	resb BUFF_SIZE

@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "includes/libfts.h"
 
 void	ft_bzero_test()
@@ -14,10 +17,11 @@ void	ft_bzero_test()
 
 void	ft_strcat_test()
 {
-	char	*src = "World!";
-	char	dest[20] = "Hello";
+	char	*src = "This is";
+	char	dest[20];
 	char	*ret;
 
+	dest[0] = 0;
 	ret = ft_strcat(dest, src);
 	printf("ft_strcat = %s %s\n", dest, ret);
 }
@@ -37,6 +41,14 @@ void	ft_isdigit_test(int c)
 
 	ret = ft_isdigit(c);
 	printf("ft_isdigit = %d\n", ret);
+}
+
+void	ft_isalnum_test(int c)
+{
+	int ret;
+
+	ret = ft_isalnum(c);
+	printf("ft_isalnum = %d\n", ret);
 }
 
 void	ft_isascii_test(int c)
@@ -104,12 +116,19 @@ void	ft_memcpy_test()
 void	ft_strdup_test()
 {
 	char *test;
-	int i;
 
-	test = ft_strdup("HAHAHA");
-	i = -1;
-	while (++i < 7)
-		printf("ft_strdup = %c\n", test[i]);
+	test = ft_strdup("Hello World! Here I am");
+	printf("ft_strdup = %s\n", test);
+}
+
+void	ft_cat_test()
+{
+	int fd;
+	int ret;
+
+	if ((fd = open("./test.txt", O_RDONLY)) == -1)
+		return ;
+	ft_cat(fd);
 }
 
 int	main()
@@ -119,14 +138,16 @@ int	main()
 	ft_isalpha_test('A' - 1);
 	ft_isdigit_test('0');
 	ft_isascii_test(5);
+	ft_isalnum_test('0');
 	ft_isprint_test(127);
 	ft_toupper_test('g' - 1);
 	ft_tolower_test('Z');
-	printf("TEST = %d\n", ft_puts("Hello"));
+	ft_puts("Hello");
 	ft_puts(NULL);
 	ft_strlen_test("Hello World");
 	ft_memset_test();
 	ft_memcpy_test();
 	ft_strdup_test();
+	ft_cat_test();
 	return (0);
 }
